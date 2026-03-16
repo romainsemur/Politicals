@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.*" />
-    <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.73.0" />
-    <PackageReference Include="Microsoft.SemanticKernel.Agents.Orchestration" Version="1.73.0-preview" />
-    <PackageReference Include="Microsoft.SemanticKernel.Agents.Runtime.InProcess" Version="1.73.0-preview" />
+    <PackageReference Include="Microsoft.Agents.AI" Version="1.0.0-rc4" />
+    <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc4" />
+    <PackageReference Include="Microsoft.Agents.AI.Workflows" Version="1.0.0-rc4" />
+    <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.4.0" />
   </ItemGroup>
 
 </Project>
