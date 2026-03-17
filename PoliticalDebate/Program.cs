@@ -1,7 +1,8 @@
+using Azure.AI.OpenAI;
+using Azure.Identity;
 using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
-using OpenAI;
 
 namespace PoliticalDebate;
 
@@ -19,21 +20,21 @@ public static class Program
         Console.WriteLine("================================================================");
         Console.WriteLine();
 
-        string? apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-        if (string.IsNullOrWhiteSpace(apiKey))
+        string? endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT");
+        if (string.IsNullOrWhiteSpace(endpoint))
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Erreur : La variable d'environnement OPENAI_API_KEY n'est pas definie.");
-            Console.WriteLine("Definissez-la avec : export OPENAI_API_KEY=sk-...");
+            Console.WriteLine("Erreur : La variable d'environnement AZURE_OPENAI_ENDPOINT n'est pas definie.");
+            Console.WriteLine("Definissez-la avec : export AZURE_OPENAI_ENDPOINT=https://<resource>.openai.azure.com");
             Console.ResetColor();
             return;
         }
 
-        string model = Environment.GetEnvironmentVariable("OPENAI_MODEL") ?? "gpt-4o-mini";
+        string deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") ?? "gpt-4o-mini";
 
-        // Create the IChatClient from OpenAI
-        IChatClient chatClient = new OpenAIClient(apiKey)
-            .GetChatClient(model)
+        // Create the IChatClient from Azure OpenAI with DefaultAzureCredential
+        IChatClient chatClient = new AzureOpenAIClient(new Uri(endpoint), new DefaultAzureCredential())
+            .GetChatClient(deploymentName)
             .AsIChatClient();
 
         // --- Define the 3 agents ---
